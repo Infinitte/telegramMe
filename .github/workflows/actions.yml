@@ -2,7 +2,7 @@ name: run weather.py
 
 on:
   schedule:
-    - cron: '55 * * * *' # At 00:00 on Monday
+    - cron: '00 12 * * *' # At 00:00 on Monday
 
 jobs:
   build:
