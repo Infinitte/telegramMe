@@ -1,4 +1,4 @@
-name: run main.py
+name: run weather.py
 
 on:
   schedule:
@@ -24,6 +24,7 @@ jobs:
           
       - name: execute py script # run main.py
         env:
+          OWM_KEY: ${{ secrets.OWM_KEY }}
           BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
           CHAT_ID: ${{ secrets.CHAT_ID }}
         run: python telegram_bot.py
