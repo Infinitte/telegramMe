@@ -1,0 +1,30 @@
+name: run spotify tools
+
+on:
+  schedule:
+    - cron: '25 * * * *' # At 00:00 on Monday
+        
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+        
+      - name: checkout repo content
+        uses: actions/checkout@v2 # checkout the repository content to github runner
+        
+      - name: setup python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.8' # install the python version needed
+                  
+      - name: install python packages
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+                  
+      - name: execute py script # run main.py
+        env:
+          OWM_KEY: ${{ secrets.OWM_KEY }}
+          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+          CHAT_ID: ${{ secrets.CHAT_ID }}
+        run: python spotify_client.py
