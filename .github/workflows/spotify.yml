@@ -2,7 +2,7 @@ name: run spotify tools
 
 on:
   schedule:
-    - cron: '25 * * * *' # At 00:00 on Monday
+    - cron: '50 * * * *' # At 00:00 on Monday
         
 jobs:
   build:
@@ -24,7 +24,8 @@ jobs:
                   
       - name: execute py script # run main.py
         env:
-          OWM_KEY: ${{ secrets.OWM_KEY }}
-          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
-          CHAT_ID: ${{ secrets.CHAT_ID }}
+          CLIENT_ID: ${{ secrets.CLIENT_ID }}
+          CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
+          USER_ID: ${{ secrets.USER_ID }}
+          REFRESH_TOKEN: ${{ secrets.REFRESH_TOKEN }}
         run: python spotify_client.py
