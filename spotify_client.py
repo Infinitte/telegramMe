@@ -4,6 +4,7 @@ import json
 #import spotipy
 #from spotipy.oauth2 import SpotifyOAuth
 import base64
+from random import randint
 
 CLIENT_ID=os.environ["CLIENT_ID"]
 CLIENT_SECRET=os.environ["CLIENT_SECRET"]
@@ -59,9 +60,8 @@ class Spotify_Client():
             "tracks": [{"uri": uri}],
             "snapshot_id": self.snapshot,
         }
-        print(form_data)
         server = requests.delete(url, headers={'Authorization': f'Bearer {self.access_token}','Accept': 'application/json'}, data=json.dumps(form_data))
-        print(server.__dict__)
+        #print(server.__dict__)
         # Add again
         self.add_to_playlist(playlist,uri)
 
@@ -71,6 +71,17 @@ class Spotify_Client():
             "uris": [ uri ],
         }
         server = requests.post(url, headers={'Authorization': f'Bearer {self.access_token}','Content-Type': 'application/json'}, data=form_data)
+
+    def reorder(self, track, pos, max, playlist):
+        value = randint(0, max)
+        url = f"https://api.spotify.com/v1/playlists/{playlist}/tracks"
+        form_data = {
+            "range_start": pos,
+            "insert_before": value,
+            "snapshot_id": self.snapshot,
+        }
+        print(f'Reordering {track} from {pos} to {value}')
+        server = requests.put(url, headers={'Authorization': f'Bearer {self.access_token}','Content-Type': 'application/json'}, data=json.dumps(form_data))
     
     def get_playlist_tracks(self,playlist_id):
         tracks = []
@@ -89,11 +100,17 @@ class Spotify_Client():
                 }
                 tracks.append(track_dict)
             offset += 50
+        # Reorder playlist
+        value = randint(0, len(tracks))
+        self.reorder(track=tracks[value],pos=value, max=len(tracks),playlist=playlist_id)
+
+        # Remove dupes
         dupes = self.find_duplicated_tracks(tracks)
         for dupe in dupes:
             self.delete_duplicate(playlist=playlist_id, uri=dupe['uri'], )
             print(dupe)
             break
+
 
 
 
