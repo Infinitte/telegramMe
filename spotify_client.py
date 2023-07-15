@@ -108,8 +108,8 @@ class Spotify_Client():
         # Remove dupes
         dupes = self.find_duplicated_tracks(tracks)
         for dupe in dupes:
-            self.delete_duplicate(playlist=playlist_id, uri=dupe['uri'], )
             print(dupe)
+            self.delete_duplicate(playlist=playlist_id, uri=dupe['uri'], )
             break
 
 
