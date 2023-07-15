@@ -49,7 +49,15 @@ class Spotify_Client():
         '''
         Find duplicated tracks on a playlist and removes then (the duplicates)
         '''
-        dupes = [x for n, x in enumerate(tracks) if x in tracks[:n]]
+        unique = []
+        dupes = []
+        for track in tracks:
+            if track in unique:
+                dupes.append(track)
+            else:
+                unique.append(track)
+
+        #dupes = [x for n, x in enumerate(tracks) if x in tracks[:n]]
 
         return(dupes)
                 
