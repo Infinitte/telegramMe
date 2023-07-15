@@ -118,9 +118,13 @@ class Spotify_Client():
 def main():
     spotify_client = Spotify_Client()
 
-    playlist = spotify_client.get_playlists("Mis favoritos")
-    if playlist:
-        spotify_client.get_playlist_tracks(playlist)
+    playlist_names = ["Mis favoritos", "Mi Indie"]
+
+    for playlist_name in playlist_names:
+        playlist = spotify_client.get_playlists(playlist_name)
+        if playlist:
+            spotify_client.get_playlist_tracks(playlist)
+
 
 
 if __name__ == '__main__':
