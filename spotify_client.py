@@ -61,6 +61,7 @@ class Spotify_Client():
             "snapshot_id": self.snapshot,
         }
         server = requests.delete(url, headers={'Authorization': f'Bearer {self.access_token}','Accept': 'application/json'}, data=json.dumps(form_data))
+        print(f'Deleting {uri} and adding again')
         #print(server.__dict__)
         # Add again
         self.add_to_playlist(playlist,uri)
