@@ -52,12 +52,12 @@ class Spotify_Client():
         unique = []
         dupes = []
         for track in tracks:
-            if track in unique:
+            if f"{track['artist']}--{track['title']}" in unique:
                 dupes.append(track)
+                print(track)
             else:
-                unique.append(track)
+                unique.append(f"{track['artist']}--{track['title']}")
 
-        print(tracks)
         #dupes = [x for n, x in enumerate(tracks) if x in tracks[:n]]
 
         return(dupes)
@@ -70,10 +70,10 @@ class Spotify_Client():
             "snapshot_id": self.snapshot,
         }
         server = requests.delete(url, headers={'Authorization': f'Bearer {self.access_token}','Accept': 'application/json'}, data=json.dumps(form_data))
-        print(f'Deleting {uri} and adding again')
+        print(f'Deleting {uri}')
         #print(server.__dict__)
         # Add again
-        self.add_to_playlist(playlist,uri)
+        #self.add_to_playlist(playlist,uri)
 
     def add_to_playlist(self,playlist,uri):
         url = f"https://api.spotify.com/v1/playlists/{playlist}/tracks?uris={uri}"
@@ -116,7 +116,6 @@ class Spotify_Client():
         # Remove dupes
         dupes = self.find_duplicated_tracks(tracks)
         for dupe in dupes:
-            print(dupe)
             self.delete_duplicate(playlist=playlist_id, uri=dupe['uri'], )
             break
 
