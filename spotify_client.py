@@ -57,6 +57,7 @@ class Spotify_Client():
             else:
                 unique.append(track)
 
+        print(tracks)
         #dupes = [x for n, x in enumerate(tracks) if x in tracks[:n]]
 
         return(dupes)
@@ -99,7 +100,6 @@ class Spotify_Client():
             url = f"https://api.spotify.com/v1/playlists/{playlist_id}/tracks?limit=50&offset={offset}"
             server = requests.get(url, headers={'Authorization': f'Bearer {self.access_token}','Accept': 'application/json'})
 
-        
             for track in server.json()["items"]:
                 track_dict = {
                     "id": track["track"]["id"],
