@@ -27,8 +27,6 @@ def main():
     rain,city,description=get_data()
     if rain:
         telegram_bot.send_message(f"Tomorrow forecast is {description} in {city}. Take care")
-    else:
-        telegram_bot.send_message(f"Tomorrow forecast is {description} in {city}. Take care")
 
 if __name__ == '__main__':
     main()
