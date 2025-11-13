@@ -2,7 +2,7 @@ name: run weather.py
 
 on:
   schedule:
-    - cron: '40 * * * *' # Cada hora a y 40 minutos
+    - cron: '40 21 * * *' # Cada hora a y 40 minutos
 
 jobs:
   build:
